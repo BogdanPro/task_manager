@@ -1,0 +1,53 @@
+create database taskmanager;
+use taskmanager;
+
+CREATE TABLE Users (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(128) DEFAULT NULL,
+type_id INT DEFAULT NULL,
+function VARCHAR(128) DEFAULT NULL,
+email VARCHAR(128) NOT NULL,
+description VARCHAR(128) DEFAULT NULL,
+phone VARCHAR(18) NOT NULL,
+password VARCHAR(200) NOT NULL,
+salt VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Groups (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(128) NOT NULL,
+description VARCHAR(128) DEFAULT NULL
+);
+
+CREATE TABLE Types (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE Tasks (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+group_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+completeness TINYINT DEFAULT NULL,
+name VARCHAR(128) NULL DEFAULT NULL,
+creation_time DATE DEFAULT NULL,
+deadline DATE DEFAULT NULL,
+main_task_id INT NULL DEFAULT NULL,
+CONSTRAINT FK_MAIN_TASK FOREIGN KEY (main_task_id) REFERENCES Tasks (id)
+);
+
+CREATE TABLE User_Group (
+user_id INT NOT NULL,
+group_id INT NOT NULL
+);
+
+CREATE TABLE Commentaries (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+task_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+text VARCHAR(20000) NULL DEFAULT NULL,
+creation_time DATE DEFAULT NULL
+);
+
+insert into types (id, name) values ('1', 'users');
+insert into types (id, name) values ('2', 'admins');
